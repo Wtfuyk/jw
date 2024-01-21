@@ -4,24 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0921f25-3dfe-487d-8c87-dbb51706c497" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/httpserver01.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jwhttpserver/jwhttpserver.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jwhttpserver/src/1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jwhttpserver/src/2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jwhttpserver/src/com/jw/httpclients/TestDemo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jwhttpserver/src/com/jw/httpserver/httpserver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jwhttpserver/src/com/jw/httpserver/loginservlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jwhttpserver/src/com/jw/httpserver/servlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jwhttpserver/src/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jwhttpserver/src/test1.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jwhttpserver/src/test2.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jwhttpserver/src/test3.html" afterDir="false" />
+    <list default="true" id="b0921f25-3dfe-487d-8c87-dbb51706c497" name="Changes" comment="暂未未完成301，302，304，500">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,8 +110,17 @@
       <workItem from="1705624884996" duration="1696000" />
       <workItem from="1705629548192" duration="6823000" />
       <workItem from="1705662498451" duration="11686000" />
-      <workItem from="1705710090088" duration="7639000" />
+      <workItem from="1705710090088" duration="10143000" />
     </task>
+    <task id="LOCAL-00001" summary="暂未未完成301，302，304，500">
+      <option name="closed" value="true" />
+      <created>1705719491897</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1705719491897</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -146,6 +139,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="暂未未完成301，302，304，500" />
+    <option name="LAST_COMMIT_MESSAGE" value="暂未未完成301，302，304，500" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
