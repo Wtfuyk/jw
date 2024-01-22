@@ -17,9 +17,8 @@ public class TestDemo {
         this.host = host;
         this.port = port;
     }
-
-    public void sendGet() throws IOException
-    {
+    //get index.html
+    public void sendGet() throws IOException {
         String path = "/";
         SocketAddress dest = new InetSocketAddress(this.host, this.port);
         Socket socket = new Socket();
@@ -40,43 +39,60 @@ public class TestDemo {
         DataInputStream dataInputStream = new DataInputStream(inputStream);
 
         // Read and print the response
+        System.out.println("sendGet:Response from the server:");
         byte[] buffer = new byte[1024];
         int bytesRead;
         while ((bytesRead = dataInputStream.read(buffer)) != -1) {
             String line = new String(buffer, 0, bytesRead, "UTF-8");
-            System.out.println(line);
+            System.out.print(line);
         }
+        System.out.println();
 
         // Close resources
         dataOutputStream.close();
         dataInputStream.close();
         socket.close();
-//
-//        OutputStreamWriter streamWriter = new OutputStreamWriter(socket.getOutputStream());
-//        bufferedWriter = new BufferedWriter(streamWriter);
-//
-//        bufferedWriter.write("GET " + path + " HTTP/1.1\r\n");
-//        bufferedWriter.write("Host: " + this.host + "\r\n");
-//        bufferedWriter.write("\r\n");
-//        bufferedWriter.flush();
-//
-//        BufferedInputStream streamReader = new BufferedInputStream(socket.getInputStream());
-//        bufferedReader = new BufferedReader(new InputStreamReader(streamReader, "utf-8"));
-//        String line = null;
-//        while((line = bufferedReader.readLine())!= null)
-//        {
-//            System.out.println(line);
-//        }
-//        bufferedReader.close();
-//        bufferedWriter.close();
-//        socket.close();
     }
+    //get log in
+    public void sendGetLogIn() throws IOException {
+        String path = "/servlet/login?username=admin&password=123456";
+        SocketAddress dest = new InetSocketAddress(this.host, this.port);
+        Socket socket = new Socket();
+        socket.connect(dest);
 
-    public void sendPost() throws IOException
-    {
-        String path = "/test3.html";
-        String data = "username = admin&password = 123456";
-        // String data = "name=zhigang_jia";
+        // Output stream for writing bytes
+        OutputStream outputStream = socket.getOutputStream();
+        DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+
+        // Write the GET request
+        String getRequest = "GET " + path + " HTTP/1.1\r\n" +
+                "Host: " + this.host + "\r\n\r\n";
+        dataOutputStream.write(getRequest.getBytes());
+        dataOutputStream.flush();
+
+        // Input stream for reading bytes
+        InputStream inputStream = socket.getInputStream();
+        DataInputStream dataInputStream = new DataInputStream(inputStream);
+
+        // Read and print the response
+        System.out.println("sendGetLogIn:Response from the server:");
+        byte[] buffer = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
+            String line = new String(buffer, 0, bytesRead, "UTF-8");
+            System.out.print(line);
+        }
+        System.out.println();
+
+        // Close resources
+        dataOutputStream.close();
+        dataInputStream.close();
+        socket.close();
+    }
+    //post log in
+    public void sendPost() throws IOException {
+        String path = "/servlet/login";
+        String data = "username=admin&password=123456";
         SocketAddress dest = new InetSocketAddress(this.host, this.port);
         Socket socket = new Socket();
         socket.connect(dest);
@@ -97,50 +113,230 @@ public class TestDemo {
         DataInputStream dataInputStream = new DataInputStream(inputStream);
 
         // Read and print the response
+        System.out.println("sendPost:Response from the server:");
         byte[] buffer = new byte[1024];
         int bytesRead;
         while ((bytesRead = dataInputStream.read(buffer)) != -1) {
             String line = new String(buffer, 0, bytesRead, "UTF-8");
-            System.out.println(line);
+            System.out.print(line);
         }
+        System.out.println();
 
         // Close resources
         dataOutputStream.close();
         dataInputStream.close();
         socket.close();
-
-//        OutputStreamWriter streamWriter = new OutputStreamWriter(socket.getOutputStream(), "utf-8");
-//        bufferedWriter = new BufferedWriter(streamWriter);
-//
-//        bufferedWriter.write("POST " + path + " HTTP/1.1\r\n");
-//        bufferedWriter.write("Host: " + this.host + "\r\n");
-//        bufferedWriter.write("Content-Length: " + data.length() + "\r\n");
-//        bufferedWriter.write("Content-Type: application/x-www-form-urlencoded\r\n");
-//        bufferedWriter.write("\r\n");
-//        bufferedWriter.write(data);
-//        bufferedWriter.flush();
-//        bufferedWriter.write("\r\n");
-//        bufferedWriter.flush();
-//
-//        BufferedInputStream streamReader = new BufferedInputStream(socket.getInputStream());
-//        bufferedReader = new BufferedReader(new InputStreamReader(streamReader, "utf-8"));
-//        String line = null;
-//        while((line = bufferedReader.readLine())!= null)
-//        {
-//            System.out.println(line);
-//        }
-//        bufferedReader.close();
-//        bufferedWriter.close();
-//        socket.close();
     }
 
-    public static void main(String[] args)
-    {
+    //301 Moved Permanently
+    public void send301() throws IOException {
+        String path = "/test5.html";
+        SocketAddress dest = new InetSocketAddress(this.host, this.port);
+        Socket socket = new Socket();
+        socket.connect(dest);
+
+        // Output stream for writing bytes
+        OutputStream outputStream = socket.getOutputStream();
+        DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+
+        // Write the GET request
+        String getRequest = "GET " + path + " HTTP/1.1\r\n" +
+                "Host: " + this.host + "\r\n\r\n";
+        dataOutputStream.write(getRequest.getBytes());
+        dataOutputStream.flush();
+
+        // Input stream for reading bytes
+        InputStream inputStream = socket.getInputStream();
+        DataInputStream dataInputStream = new DataInputStream(inputStream);
+
+        // Read and print the response
+        System.out.println("send301:Response from the server:");
+        byte[] buffer = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
+            String line = new String(buffer, 0, bytesRead, "UTF-8");
+            System.out.print(line);
+        }
+        System.out.println();
+
+        // Close resources
+        dataOutputStream.close();
+        dataInputStream.close();
+        socket.close();
+    }
+
+    //302 Found
+    public void send302() throws IOException {
+        String path = "/test4.html";
+        SocketAddress dest = new InetSocketAddress(this.host, this.port);
+        Socket socket = new Socket();
+        socket.connect(dest);
+
+        // Output stream for writing bytes
+        OutputStream outputStream = socket.getOutputStream();
+        DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+
+        // Write the GET request
+        String getRequest = "GET " + path + " HTTP/1.1\r\n" +
+                "Host: " + this.host + "\r\n\r\n";
+        dataOutputStream.write(getRequest.getBytes());
+        dataOutputStream.flush();
+
+        // Input stream for reading bytes
+        InputStream inputStream = socket.getInputStream();
+        DataInputStream dataInputStream = new DataInputStream(inputStream);
+
+        // Read and print the response
+        System.out.println("send302:Response from the server:");
+        byte[] buffer = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
+            String line = new String(buffer, 0, bytesRead, "UTF-8");
+            System.out.print(line);
+        }
+        System.out.println();
+
+        // Close resources
+        dataOutputStream.close();
+        dataInputStream.close();
+        socket.close();
+    }
+
+    //304 Not Modified
+
+    //404 Not Found
+    public void send404() throws IOException {
+        String path = "/test6.html";
+        SocketAddress dest = new InetSocketAddress(this.host, this.port);
+        Socket socket = new Socket();
+        socket.connect(dest);
+
+        // Output stream for writing bytes
+        OutputStream outputStream = socket.getOutputStream();
+        DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+
+        // Write the GET request
+        String getRequest = "GET " + path + " HTTP/1.1\r\n" +
+                "Host: " + this.host + "\r\n\r\n";
+        dataOutputStream.write(getRequest.getBytes());
+        dataOutputStream.flush();
+
+        // Input stream for reading bytes
+        InputStream inputStream = socket.getInputStream();
+        DataInputStream dataInputStream = new DataInputStream(inputStream);
+
+        // Read and print the response
+        System.out.println("send404:Response from the server:");
+        byte[] buffer = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
+            String line = new String(buffer, 0, bytesRead, "UTF-8");
+            System.out.print(line);
+        }
+        System.out.println();
+
+        // Close resources
+        dataOutputStream.close();
+        dataInputStream.close();
+        socket.close();
+    }
+
+    //405 Method Not Allowed
+    public void send405() throws IOException {
+        String path = "/";
+        SocketAddress dest = new InetSocketAddress(this.host, this.port);
+        Socket socket = new Socket();
+        socket.connect(dest);
+
+        // Output stream for writing bytes
+        OutputStream outputStream = socket.getOutputStream();
+        DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+
+        // Write the DELETE request
+        String getRequest = "DELETE " + path + " HTTP/1.1\r\n" +
+                "Host: " + this.host + "\r\n\r\n";
+        dataOutputStream.write(getRequest.getBytes());
+        dataOutputStream.flush();
+
+        // Input stream for reading bytes
+        InputStream inputStream = socket.getInputStream();
+        DataInputStream dataInputStream = new DataInputStream(inputStream);
+
+        // Read and print the response
+        System.out.println("send405:Response from the server:");
+        byte[] buffer = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
+            String line = new String(buffer, 0, bytesRead, "UTF-8");
+            System.out.print(line);
+        }
+        System.out.println();
+
+        // Close resources
+        dataOutputStream.close();
+        dataInputStream.close();
+        socket.close();
+    }
+
+    //500 Internal Server Error
+    public void send500() throws IOException {
+        String path = "/servlet/logins";
+        SocketAddress dest = new InetSocketAddress(this.host, this.port);
+        Socket socket = new Socket();
+        socket.connect(dest);
+
+        // Output stream for writing bytes
+        OutputStream outputStream = socket.getOutputStream();
+        DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+
+        // Write the GET request
+        String getRequest = "GET " + path + " HTTP/1.1\r\n" +
+                "Host: " + this.host + "\r\n\r\n";
+        dataOutputStream.write(getRequest.getBytes());
+        dataOutputStream.flush();
+
+        // Input stream for reading bytes
+        InputStream inputStream = socket.getInputStream();
+        DataInputStream dataInputStream = new DataInputStream(inputStream);
+
+        // Read and print the response
+        System.out.println("send500:Response from the server:");
+        byte[] buffer = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
+            String line = new String(buffer, 0, bytesRead, "UTF-8");
+            System.out.print(line);
+        }
+        System.out.println();
+
+        // Close resources
+        dataOutputStream.close();
+        dataInputStream.close();
+        socket.close();
+    }
+
+    public static void main(String[] args) {
         TestDemo td = new TestDemo("192.168.3.108",8080);
         try {
-             td.sendGet(); //send HTTP GET Request
-
-            td.sendPost(); // send HTTP POST Request
+            //send HTTP GET Request
+            td.sendGet();
+            //send HTTP GET Log in Request
+            td.sendGetLogIn();
+            //test3.html GUI Log in
+            //send HTTP POST Log in Request
+            td.sendPost();
+            //301 Moved Permanently
+            td.send301();
+            //302 Found
+            td.send302();
+            //304 Not Modified
+//            td.send304();
+            //404 Not Found
+            td.send404();
+            //405 Method Not Allowed
+            td.send405();
+            //500 Internal Server Error
+            td.send500();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
