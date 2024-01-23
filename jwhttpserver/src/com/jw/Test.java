@@ -27,7 +27,7 @@ public class Test {
         httpclient.sendGet("/test4.html");
     }
 
-    //TODO:304 Not Modified
+    //TODO: 304 Not Modified
     public void testSend304(httpclient httpclient) throws IOException {
 
     }
