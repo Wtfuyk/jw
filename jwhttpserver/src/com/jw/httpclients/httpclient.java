@@ -82,9 +82,9 @@ public class httpclient {
         System.out.println();
 
         // Close resources
-        dataOutputStream.close();
-        dataInputStream.close();
-        socket.close();
+        //dataOutputStream.close();
+        //dataInputStream.close();
+        //socket.close();
     }
 
     public void sendPost(String path, String data) throws IOException{
@@ -119,9 +119,9 @@ public class httpclient {
         System.out.println();
 
         // Close resources
-        dataOutputStream.close();
-        dataInputStream.close();
-        socket.close();
+        //dataOutputStream.close();
+        //dataInputStream.close();
+        //socket.close();
     }
 
     public void wrongMethodSend(String path) throws IOException{

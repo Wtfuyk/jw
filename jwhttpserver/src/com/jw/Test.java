@@ -72,8 +72,8 @@ public class Test {
     }
 
     public static void main(String[] args) throws IOException {
+        //httpserver.start();
         Test test = new Test();
-        httpserver.start();
         httpclient client = new httpclient("localhost",8080);
         test.testSendGet(client);
         test.testSend301(client);
