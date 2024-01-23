@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Log In</title>
     <link rel="icon" href="data:;base,=">
 </head>
 <body>
-<form action="/servlet/login" method="post">
+<form method="post">
     <input name="username" type="text"/><br/><br/>
     <input name="password" type="password"/><br/><br/>
-    <button>submit</button>
+
+    <!-- 登录按钮，action 为 /servlet/login -->
+    <button type="submit" formaction="/servlet/login">logIn</button>
+
+    <!-- 注册按钮，action 为 /servlet/signup -->
+    <button type="submit" formaction="/servlet/signup">Register</button>
 </form>
+
 </body>
 </html>
