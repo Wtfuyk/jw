@@ -4,12 +4,8 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -17,8 +13,10 @@ import java.util.concurrent.Executors;
 public class httpserver {
 
     private final HashMap<String, servlet> servletMap = new HashMap<>();
+    private final HashMap<String, byte[]> etagMap = new HashMap<>();
 
     /**
+     *
      * @param port
      */
     public httpserver(int port) throws IOException {
@@ -43,7 +41,8 @@ public class httpserver {
         }
     }
 
-    private synchronized servlet getServlet(String servletName) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    private synchronized servlet getServlet(String servletName)
+            throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         servletName = "com.jw.httpserver." + servletName + "servlet";
         if (servletMap.containsKey(servletName)) {
             return servletMap.get(servletName);
@@ -55,42 +54,31 @@ public class httpserver {
         }
     }
 
-    private Date getFileModifyDate(String filename) {
-        File file = new File("jw/jwhttpserver/src/" + filename);
-        Long lastModified = file.lastModified();
-        Date date = new Date(lastModified);
-        return new Date(file.lastModified());
-    }
-
-    private Date StringToDate(String datetime) {
-        SimpleDateFormat ft = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
-        try {
-            return ft.parse(datetime);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private void handleRequest(Socket socket) throws IOException {
         InputStream clientIn = socket.getInputStream();
         OutputStream outputStream = socket.getOutputStream();
-        //clientIn.available() == 0
-        //read the request
+        // clientIn.available() == 0
+        // read the request
         byte[] requestBuffer = new byte[2048];
         clientIn.read(requestBuffer);
 
-        //when the requestBuffer is null eventually, the string will not be null
+        // when the requestBuffer is null eventually, the string will not be null
         String request = new String(requestBuffer);
         System.out.println(request);
         String firstLines = request.split("\r\n")[0];
 
+        String requesturl = firstLines.split(" ")[1];
+
         String method = firstLines.split(" ")[0];
+
         if (!Objects.equals(method, "GET") && !Objects.equals(method, "POST")) {
-            writeToClient(outputStream, 405, "Method Not Allowed", "text/html", "", null, "<h1>405 Method Not Allowed</h1>".getBytes());
+            writeToClient(outputStream, 405, "Method Not Allowed", "text/html", "", "",
+                    "<h1>405 Method Not Allowed</h1>".getBytes());
             return;
         }
 
-        String requesturl = firstLines.split(" ")[1];
+
+
         if (requesturl.indexOf("/servlet") != -1) {
             String servletName = null;
             if (requesturl.indexOf("?") != -1) {
@@ -101,23 +89,25 @@ public class httpserver {
 
             servletName = servletName.trim();
             if (servletName.equals("")) {
-                writeToClient(outputStream, 404, "Not Found", "text/html", "", null, "<h1>404 File Not Found</h1>".getBytes());
+                writeToClient(outputStream, 404, "Not Found", "text/html", "", "",
+                        "<h1>404 File Not Found</h1>".getBytes());
                 return;
             }
 
             try {
                 servlet servlet = getServlet(servletName);
                 String content = servlet.doRequest(method, requesturl, request.trim());
-                writeToClient(outputStream, 200, "OK", "text/html", "", null, content.getBytes());
+                writeToClient(outputStream, 200, "OK", "text/html", "", "", content.getBytes());
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
                 e.printStackTrace();
-                writeToClient(outputStream, 500, "Internal Server Error", "text/html", "", null, "<h1>500 Internal Server Error</h1>".getBytes());
+                writeToClient(outputStream, 500, "Internal Server Error", "text/html", "", "",
+                        "<h1>500 Internal Server Error</h1>".getBytes());
             }
             return;
         }
 
         if (Objects.equals(requesturl, "/favicon.ico")) {
-            writeToClient(outputStream, 200, "OK", "text/html", "", null, "<hi>favicon.ico</hi>".getBytes());
+            writeToClient(outputStream, 200, "OK", "text/html", "", "", "<hi>favicon.ico</hi>".getBytes());
             return;
         }
         String contentType = "text/html";
@@ -134,60 +124,74 @@ public class httpserver {
         }
         String resoursePath = requesturl.equals("/") ? "index.html" : requesturl.substring(1);
 
+        if (Objects.equals(method, "GET") && requesturl.indexOf("?") == -1 && request.contains("If-None-Match")) {
+            String etag = request.split("If-None-Match: ")[1].split("\r\n")[0];
+            URL url = getClass().getClassLoader().getResource(resoursePath);
+
+            byte[] content = null;
+            try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(url.getPath()))) {
+                content = bufferedInputStream.readAllBytes();
+            }
+
+            byte[] rawContent = etagMap.get(etag);
+            if (new String(rawContent).equals(new String(content))) {
+                writeToClient(outputStream, 304, "Not Modified", "text/html", etag, "",
+                        "<h1>304 Not Modified</h1>".getBytes());
+                return;
+            }
+
+            String newEtag = String.valueOf(content.hashCode());
+            etagMap.put(newEtag, content);
+            writeToClient(outputStream, 200, "OK", "text/html", newEtag, "", content);
+            return;
+
+        }
         if (resoursePath.equals("test4.html")) {
-            writeToClient(outputStream, 302, "Found", "text/html", "http://192.168.3.108:8080/test1.html", null, "<h1>302 Found</h1>".getBytes());
+            writeToClient(outputStream, 302, "Found", "text/html", "", "http://localhost:8080/test1.html",
+                    "<h1>302 Found</h1>".getBytes());
             return;
         }
         if (resoursePath.equals("test5.html")) {
-            writeToClient(outputStream, 301, "Moved Permanently", "text/html", "http://192.168.3.108:8080/test2.html", null, "<h1>301 Moved Permanently</h1>".getBytes());
+            writeToClient(outputStream, 301, "Moved Permanently", "text/html", "", "http://localhost:8080/test2.html",
+                    "<h1>301 Moved Permanently</h1>".getBytes());
             return;
         }
 
         URL url = getClass().getClassLoader().getResource(resoursePath);
 
         if (url == null) {
-            writeToClient(outputStream, 404, "Not Found", contentType, "", null, "<h1>404 File Not Found</h1>".getBytes());
+            writeToClient(outputStream, 404, "Not Found", contentType, "", "", "<h1>404 File Not Found</h1>".getBytes());
             return;
         }
 
         byte[] content = null;
-
-        Date modifyDate = getFileModifyDate(resoursePath);
-        String[] requestLines = request.split("\r\n");
-        // no If Modified Since:
-        if (requestLines.length == 4) {
-            try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(url.getPath()))) {
-                content = bufferedInputStream.readAllBytes();
-            }
-            writeToClient(outputStream, 200, "OK", contentType, "", modifyDate, content);
-        } else {
-            Date getDateTime = StringToDate(requestLines[2].substring(19));
-            //need to send new file
-            if (modifyDate.compareTo(getDateTime) <= 0) {
-                try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(url.getPath()))) {
-                    content = bufferedInputStream.readAllBytes();
-                }
-                writeToClient(outputStream, 200, "OK", contentType, "", modifyDate, content);
-            }
-            //no need to send new file
-            else {
-                writeToClient(outputStream, 304, "Not Modified", contentType, "", null, "<h1>File Not Modified</h1>".getBytes());
-            }
+        try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(url.getPath()))) {
+            content = bufferedInputStream.readAllBytes();
         }
+
+        String etag = String.valueOf(content.hashCode());
+        if (Objects.equals(method, "GET")) {
+            etagMap.put(etag, content);
+        }
+
+        writeToClient(outputStream, 200, "OK", contentType, etag, "", content);
+
     }
 
-    private void writeToClient(OutputStream outputStream, int responseCode, String responseDes, String contentType, String location, Date ModifyDate, byte[] content) throws IOException {
+    private void writeToClient(OutputStream outputStream, int responseCode, String responseDes, String contentType, String etag,
+            String location, byte[] content) throws IOException {
         outputStream.write(("HTTP/1.1 " + responseCode + " " + responseDes + "\r\n").getBytes());
         outputStream.write(("Content-Type: " + contentType + "\r\n").getBytes());
+        outputStream.write(("ETag: " + etag + "\r\n").getBytes());
+        outputStream.write(("Date: " + new Date() + "\r\n").getBytes());
         outputStream.write(("Location: " + location + "\r\n").getBytes());
-        outputStream.write(("ModifyDate: " + ModifyDate + "\r\n").getBytes());
         outputStream.write("\r\n".getBytes());
         outputStream.write(content);
         outputStream.flush();
         outputStream.close();
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void start() throws IOException {
         new httpserver(8080);
     }
 }

@@ -22,7 +22,7 @@ public abstract class servlet {
     }
 
     public Map<String, Object> getPostParams(String requestString) {
-        String[]  requestArr = requestString.split("\r\n");
+        String[] requestArr = requestString.split("\r\n");
         String paramStr = requestArr[requestArr.length - 1];
         System.out.println(paramStr);
         return getParams(paramStr);
