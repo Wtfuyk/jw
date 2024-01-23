@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b0921f25-3dfe-487d-8c87-dbb51706c497" name="Changes" comment="暂未未完成301，302，304，500">
-      <change afterPath="$PROJECT_DIR$/jwhttpserver/src/com/jw/httpserver/signupservlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jwhttpserver/src/com/jw/httpserver/user_map.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jwhttpserver/src/com/jw/httpclients/TestDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/jwhttpserver/src/com/jw/httpclients/TestDemo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jwhttpserver/src/com/jw/httpserver/httpserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/jwhttpserver/src/com/jw/httpserver/httpserver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jwhttpserver/src/com/jw/httpserver/loginservlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/jwhttpserver/src/com/jw/httpserver/loginservlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jwhttpserver/src/com/jw/httpserver/servlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/jwhttpserver/src/com/jw/httpserver/servlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jwhttpserver/src/test3.html" beforeDir="false" afterPath="$PROJECT_DIR$/jwhttpserver/src/test3.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +61,7 @@
       <recent name="C:\Users\Zhai zhiyang\Desktop\httpserver01\jwhttpserver\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.httpserver">
+  <component name="RunManager" selected="Application.TestDemo">
     <configuration name="TestDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.jw.httpclients.TestDemo" />
       <module name="jwhttpserver" />
@@ -127,6 +122,9 @@
       <workItem from="1705809162063" duration="244000" />
       <workItem from="1705834638055" duration="11675000" />
       <workItem from="1705928750272" duration="18771000" />
+      <workItem from="1705982131792" duration="13000" />
+      <workItem from="1706009898865" duration="4944000" />
+      <workItem from="1706014901207" duration="6776000" />
     </task>
     <task id="LOCAL-00001" summary="暂未未完成301，302，304，500">
       <option name="closed" value="true" />

@@ -25,25 +25,25 @@ public class TestDemo {
         this.port = port;
     }
 
-    public static void replaceStringInFile(String filePath, String oldString, String newString) {
-        try {
-            // 读取文件内容
-            Path path = Paths.get(filePath);
-            List<String> lines = Files.readAllLines(path);
-
-            // 替换字符串
-            List<String> modifiedLines = lines.stream()
-                    .map(line -> line.replace(oldString, newString))
-                    .collect(Collectors.toList());
-
-            // 写回文件
-            Files.write(path, modifiedLines);
-
-            System.out.println("字符串替换成功！");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void replaceStringInFile(String filePath, String oldString, String newString) {
+//        try {
+//            // 读取文件内容
+//            Path path = Paths.get(filePath);
+//            List<String> lines = Files.readAllLines(path);
+//
+//            // 替换字符串
+//            List<String> modifiedLines = lines.stream()
+//                    .map(line -> line.replace(oldString, newString))
+//                    .collect(Collectors.toList());
+//
+//            // 写回文件
+//            Files.write(path, modifiedLines);
+//
+//            System.out.println("字符串替换成功！");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     //get index.html
     public void sendGet() throws IOException {
@@ -58,7 +58,8 @@ public class TestDemo {
 
         // Write the GET request
         String getRequest = "GET " + path + " HTTP/1.1\r\n" +
-                "Host: " + this.host + "\r\n\r\n";
+                "Host: " + this.host + "\r\n" +
+                "Connection: close\r\n\r\n";
         dataOutputStream.write(getRequest.getBytes());
         dataOutputStream.flush();
 
@@ -70,10 +71,11 @@ public class TestDemo {
         System.out.println("sendGet:Response from the server:");
         byte[] buffer = new byte[1024];
         int bytesRead;
-        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
+        bytesRead = dataInputStream.read(buffer);
+//        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
             String line = new String(buffer, 0, bytesRead, "UTF-8");
             System.out.print(line);
-        }
+//        }
         System.out.println();
 
         // Close resources
@@ -94,7 +96,8 @@ public class TestDemo {
 
         // Write the GET request
         String getRequest = "GET " + path + " HTTP/1.1\r\n" +
-                "Host: " + this.host + "\r\n\r\n";
+                "Host: " + this.host + "\r\n" +
+                "Connection: close\r\n\r\n";
         dataOutputStream.write(getRequest.getBytes());
         dataOutputStream.flush();
 
@@ -106,10 +109,11 @@ public class TestDemo {
         System.out.println("sendGetLogIn:Response from the server:");
         byte[] buffer = new byte[1024];
         int bytesRead;
-        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
+        bytesRead = dataInputStream.read(buffer);
+//        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
             String line = new String(buffer, 0, bytesRead, "UTF-8");
             System.out.print(line);
-        }
+//        }
         System.out.println();
 
 
@@ -131,7 +135,8 @@ public class TestDemo {
         String postRequest = "POST " + path + " HTTP/1.1\r\n" +
                 "Host: " + this.host + "\r\n" +
                 "Content-Length: " + data.length() + "\r\n" +
-                "Content-Type: application/x-www-form-urlencoded\r\n\r\n" +
+                "Content-Type: application/x-www-form-urlencoded\r\n" +
+                "Connection: close\r\n\r\n" +
                 data;
         dataOutputStream.write(postRequest.getBytes());
         dataOutputStream.flush();
@@ -144,10 +149,11 @@ public class TestDemo {
         System.out.println("sendPost:Response from the server:");
         byte[] buffer = new byte[1024];
         int bytesRead;
-        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
+        bytesRead = dataInputStream.read(buffer);
+//        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
             String line = new String(buffer, 0, bytesRead, "UTF-8");
             System.out.print(line);
-        }
+//        }
         System.out.println();
 
         // Close resources
@@ -169,7 +175,8 @@ public class TestDemo {
         String postRequest = "POST " + path + " HTTP/1.1\r\n" +
                 "Host: " + this.host + "\r\n" +
                 "Content-Length: " + data.length() + "\r\n" +
-                "Content-Type: application/x-www-form-urlencoded\r\n\r\n" +
+                "Content-Type: application/x-www-form-urlencoded\r\n" +
+                "Connection: close\r\n\r\n" +
                 data;
         dataOutputStream.write(postRequest.getBytes());
         dataOutputStream.flush();
@@ -182,10 +189,11 @@ public class TestDemo {
         System.out.println("sendPost:Response from the server:");
         byte[] buffer = new byte[1024];
         int bytesRead;
-        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
+        bytesRead = dataInputStream.read(buffer);
+//        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
             String line = new String(buffer, 0, bytesRead, "UTF-8");
             System.out.print(line);
-        }
+//        }
         System.out.println();
 
         // Close resources
@@ -207,7 +215,8 @@ public class TestDemo {
 
         // Write the GET request
         String getRequest = "GET " + path + " HTTP/1.1\r\n" +
-                "Host: " + this.host + "\r\n\r\n";
+                "Host: " + this.host + "\r\n" +
+                "Connection: close\r\n\r\n";
         dataOutputStream.write(getRequest.getBytes());
         dataOutputStream.flush();
 
@@ -219,10 +228,11 @@ public class TestDemo {
         System.out.println("send301:Response from the server:");
         byte[] buffer = new byte[1024];
         int bytesRead;
-        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
+        bytesRead = dataInputStream.read(buffer);
+//        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
             String line = new String(buffer, 0, bytesRead, "UTF-8");
             System.out.print(line);
-        }
+//        }
         System.out.println();
 
         // Close resources
@@ -244,7 +254,8 @@ public class TestDemo {
 
         // Write the GET request
         String getRequest = "GET " + path + " HTTP/1.1\r\n" +
-                "Host: " + this.host + "\r\n\r\n";
+                "Host: " + this.host + "\r\n" +
+                "Connection: close\r\n\r\n";
         dataOutputStream.write(getRequest.getBytes());
         dataOutputStream.flush();
 
@@ -256,10 +267,11 @@ public class TestDemo {
         System.out.println("send302:Response from the server:");
         byte[] buffer = new byte[1024];
         int bytesRead;
-        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
+        bytesRead = dataInputStream.read(buffer);
+//        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
             String line = new String(buffer, 0, bytesRead, "UTF-8");
             System.out.print(line);
-        }
+//        }
         System.out.println();
 
         // Close resources
@@ -281,7 +293,8 @@ public class TestDemo {
 
         // Write the GET request
         String getRequest = "GET " + path + " HTTP/1.1\r\n" +
-                "Host: " + this.host + "\r\n\r\n";
+                "Host: " + this.host + "\r\n" +
+                "Connection: close\r\n\r\n";
         dataOutputStream.write(getRequest.getBytes());
         dataOutputStream.flush();
 
@@ -294,9 +307,10 @@ public class TestDemo {
         byte[] buffer = new byte[2048];
         int bytesRead;
         StringBuilder responsesb = new StringBuilder();
-        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
+        bytesRead = dataInputStream.read(buffer);
+//        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
             responsesb.append(new String(buffer, 0, bytesRead, "UTF-8"));
-        }
+//        }
         String response = responsesb.toString();
         System.out.println(response);
 
@@ -320,7 +334,8 @@ public class TestDemo {
         // Write the GET request
         String getRequest2 = "GET " + path + " HTTP/1.1\r\n" +
                 "Host: " + this.host + "\r\n" +
-                "If-None-Match: " + etag + "\r\n\r\n";
+                "If-None-Match: " + etag + "\r\n" +
+                "Connection: close\r\n\r\n";
         dataOutputStream2.write(getRequest2.getBytes());
         dataOutputStream2.flush();
 
@@ -333,9 +348,10 @@ public class TestDemo {
         byte[] buffer2 = new byte[1024];
         int bytesRead2;
         StringBuilder responsesb2 = new StringBuilder();
-        while ((bytesRead2 = dataInputStream2.read(buffer2)) != -1) {
+        bytesRead2 = dataInputStream.read(buffer);
+//        while ((bytesRead2 = dataInputStream2.read(buffer2)) != -1) {
             responsesb2.append(new String(buffer2, 0, bytesRead2, "UTF-8"));
-        }
+//        }
         String response2 = responsesb2.toString();
         System.out.println( response2);
 
@@ -449,7 +465,8 @@ public class TestDemo {
 
         // Write the GET request
         String getRequest = "GET " + path + " HTTP/1.1\r\n" +
-                "Host: " + this.host + "\r\n\r\n";
+                "Host: " + this.host + "\r\n" +
+                "Connection: close\r\n\r\n";
         dataOutputStream.write(getRequest.getBytes());
         dataOutputStream.flush();
 
@@ -461,10 +478,11 @@ public class TestDemo {
         System.out.println("send404:Response from the server:");
         byte[] buffer = new byte[1024];
         int bytesRead;
-        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
+        bytesRead = dataInputStream.read(buffer);
+//        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
             String line = new String(buffer, 0, bytesRead, "UTF-8");
             System.out.print(line);
-        }
+//        }
         System.out.println();
 
         // Close resources
@@ -486,7 +504,8 @@ public class TestDemo {
 
         // Write the DELETE request
         String getRequest = "DELETE " + path + " HTTP/1.1\r\n" +
-                "Host: " + this.host + "\r\n\r\n";
+                "Host: " + this.host + "\r\n" +
+                "Connection: close\r\n\r\n";
         dataOutputStream.write(getRequest.getBytes());
         dataOutputStream.flush();
 
@@ -498,10 +517,11 @@ public class TestDemo {
         System.out.println("send405:Response from the server:");
         byte[] buffer = new byte[1024];
         int bytesRead;
-        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
+        bytesRead = dataInputStream.read(buffer);
+//        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
             String line = new String(buffer, 0, bytesRead, "UTF-8");
             System.out.print(line);
-        }
+//        }
         System.out.println();
 
         // Close resources
@@ -523,7 +543,8 @@ public class TestDemo {
 
         // Write the GET request
         String getRequest = "GET " + path + " HTTP/1.1\r\n" +
-                "Host: " + this.host + "\r\n\r\n";
+                "Host: " + this.host + "\r\n" +
+                "Connection: close\r\n\r\n";
         dataOutputStream.write(getRequest.getBytes());
         dataOutputStream.flush();
 
@@ -535,11 +556,67 @@ public class TestDemo {
         System.out.println("send500:Response from the server:");
         byte[] buffer = new byte[1024];
         int bytesRead;
-        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
+        bytesRead = dataInputStream.read(buffer);
+//        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
             String line = new String(buffer, 0, bytesRead, "UTF-8");
             System.out.print(line);
-        }
+//        }
         System.out.println();
+
+        // Close resources
+        dataOutputStream.close();
+        dataInputStream.close();
+        socket.close();
+    }
+
+    //http1.1 keep-alive
+    public void sendGetKeepAlive() throws IOException {
+        SocketAddress dest = new InetSocketAddress(this.host, this.port);
+        Socket socket = new Socket();
+        socket.connect(dest);
+        //first request
+        String path = "/test1.html";
+        // Output stream for writing bytes
+        OutputStream outputStream = socket.getOutputStream();
+        DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+        // Write the GET request
+        String getRequest = "GET " + path + " HTTP/1.1\r\n" +
+                "Host: " + this.host + "\r\n" +
+                "Connection: keep-alive\r\n\r\n";
+        dataOutputStream.write(getRequest.getBytes());
+//        dataOutputStream.flush();
+        // Input stream for reading bytes
+        InputStream inputStream = socket.getInputStream();
+        DataInputStream dataInputStream = new DataInputStream(inputStream);
+        // Read and print the response
+        System.out.println("sendGETKeepAlive:Response from the server:");
+        byte[] buffer = new byte[2048];
+        int bytesRead;
+        StringBuilder responsesb = new StringBuilder();
+        bytesRead = dataInputStream.read(buffer);
+        responsesb.append(new String(buffer, 0, bytesRead, "UTF-8"));
+
+        String response = responsesb.toString();
+        System.out.println(response);
+
+        //second request
+        path = "/test2.html";
+        // Write the GET request
+        getRequest = "GET " + path + " HTTP/1.1\r\n" +
+                "Host: " + this.host + "\r\n" +
+                "Connection: close\r\n\r\n";
+        dataOutputStream.write(getRequest.getBytes());
+//        dataOutputStream.flush();
+        // Read and print the response
+        System.out.println("sendGETKeepAlive:Response from the server:");
+        buffer = new byte[2048];
+        responsesb = new StringBuilder();
+        bytesRead = dataInputStream.read(buffer);
+//        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
+            responsesb.append(new String(buffer, 0, bytesRead, "UTF-8"));
+//        }
+        response = responsesb.toString();
+        System.out.println(response);
 
         // Close resources
         dataOutputStream.close();
@@ -553,26 +630,28 @@ public class TestDemo {
             //send HTTP GET Request
             td.sendGet();
             //send HTTP GET Log in Request
-            td.sendGetLogIn();
-            //test3.html GUI Log in
-            //send HTTP POST Log in Request
-            td.loginPost();
-            td.signupPost();
-            td.loginPost();
-            //301 Moved Permanently
-            td.send301();
-            //302 Foundsername is not exis
-            td.send302();
-            //304 Not Modified
-            td.send304();
-            //304 Modified
-//            td.send304Modified();
-            //404 Not Found
-            td.send404();
-            //405 Method Not Allowed
-            td.send405();
-            //500 Internal Server Error
-            td.send500();
+//            td.sendGetLogIn();
+//            //test3.html GUI Log in
+//            //send HTTP POST Log in Request
+//            td.loginPost();
+//            td.signupPost();
+//            td.loginPost();
+//            //301 Moved Permanently
+//            td.send301();
+//            //302 Foundsername is not exis
+//            td.send302();
+//            //304 Not Modified
+//            td.send304();
+//            //304 Modified
+////            td.send304Modified();
+//            //404 Not Found
+//            td.send404();
+//            //405 Method Not Allowed
+//            td.send405();
+//            //500 Internal Server Error
+//            td.send500();
+//            //http1.1 keep-alive
+//            td.sendGetKeepAlive();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
