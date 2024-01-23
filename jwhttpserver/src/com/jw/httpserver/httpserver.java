@@ -191,7 +191,7 @@ public class httpserver {
         outputStream.close();
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void start() throws IOException {
         new httpserver(8080);
     }
 }
