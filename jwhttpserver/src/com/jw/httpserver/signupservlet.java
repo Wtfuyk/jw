@@ -16,6 +16,6 @@ public class signupservlet extends servlet{
         }
         user_map.getInstance().users.put(username, password);
         System.out.println(user_map.getInstance().users);
-        return "<hi>Sign up success!</hi>";
+        return "<hi>Welcome to our community!</hi><script>alert('Registration successful! ')</script>";
     }
 }

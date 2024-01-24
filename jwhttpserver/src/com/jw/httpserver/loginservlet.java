@@ -24,6 +24,6 @@ public class loginservlet extends servlet{
         if(!user_map.getInstance().users.get(username).equals(password)){
             return "<hi>password is wrong</hi>";
         }
-        return "<hi>Log in success!</hi>";
+        return "<hi>Let's start surfing!</hi><script>alert('Log in success! ')</script>";
     }
 }

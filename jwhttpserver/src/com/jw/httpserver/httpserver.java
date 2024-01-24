@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 public class httpserver {
 
@@ -16,7 +17,6 @@ public class httpserver {
     private final HashMap<String, byte[]> etagMap = new HashMap<>();
 
     /**
-     *
      * @param port
      */
     public httpserver(int port) throws IOException {
@@ -29,7 +29,6 @@ public class httpserver {
         while (true) {
             Socket socket = serverSocket.accept();
             System.out.println("Connection accepted");
-//            while(!socket.isClosed()) {
             Runnable task = () -> {
                 try {
                     handleRequest(socket);
@@ -39,7 +38,6 @@ public class httpserver {
                 }
             };
             executorService.submit(task);
-//            }
         }
     }
 
@@ -56,12 +54,13 @@ public class httpserver {
         }
     }
 
+
+
     private void handleRequest(Socket socket) throws IOException {
         InputStream inputStream = socket.getInputStream();
         DataInputStream dataInputStream = new DataInputStream(inputStream);
         OutputStream outputStream = socket.getOutputStream();
         DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
-        // dataInputStream.available() == 0
         // read the request
         byte[] requestBuffer = new byte[2048];
         while (dataInputStream.read(requestBuffer) != -1) {
@@ -110,16 +109,12 @@ public class httpserver {
                     writeToClient(dataOutputStream, 500, "Internal Server Error", "text/html", "", "",
                             "<h1>500 Internal Server Error</h1>".getBytes());
                 }
-                if (Objects.equals(connection, "close")) {
                     break;
-                }
             }
 
             if (Objects.equals(requesturl, "/favicon.ico")) {
                 writeToClient(dataOutputStream, 200, "OK", "text/html", "", "", "<hi>favicon.ico</hi>".getBytes());
-                if (Objects.equals(connection, "close")) {
-                    break;
-                }
+                break;
             }
             String contentType = "text/html";
             if (requesturl.endsWith(".css")) {
@@ -200,7 +195,6 @@ public class httpserver {
             }
         }
         dataInputStream.close();
-//        dataOutputStream.flush();
         dataOutputStream.close();
         socket.close();
     }
@@ -208,15 +202,13 @@ public class httpserver {
     private void writeToClient(DataOutputStream dataOutputStream, int responseCode, String responseDes, String contentType, String etag,
                                String location, byte[] content) throws IOException {
         dataOutputStream.write(("HTTP/1.1 " + responseCode + " " + responseDes + "\r\n" + "Content-Type: " + contentType + "\r\n" + "ETag: " + etag + "\r\n" + "Date: " + new Date() + "\r\n" + "Location: " + location + "\r\n\r\n" + new String(content)).getBytes());
-//        dataOutputStream.flush();
-//        dataOutputStream.close();
     }
 
-    public static void start() throws IOException {
-        new httpserver(8080);
-    }
+//    public static void start() throws IOException {
+//        new httpserver(8080);
+//    }
 
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         new httpserver(8080);
     }
 }

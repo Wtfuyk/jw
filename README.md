@@ -5,7 +5,7 @@
 | :----: | :-------: | :----------: |
 | 张博阳 | 211840196 |              |
 | 张雨姗 | 211503026 |              |
-| 胡志杰 | 201830160 | 撰写说明文档 |
+| 胡志杰 | 201830160 | 代码整合，撰写说明文档 |
 | 翟志阳 | 221250161 |              |
 | 邹玉麟 | 221830073 |              |
 
@@ -18,14 +18,13 @@
 5.  HTTP服务器端支持200、301、302、304、404、405、500的状态码
 6.  HTTP服务器端支持长连接
 7.  MIME支持text/html、text/css、application/javascript、image/png、image/jpeg、image/gif六种类型
-8.  支持用户注册与登陆
+8.  支持以网页形式进行用户注册与登陆
 
 ## 目录结构
 项目目录结构如下：
 ```
 │  .gitignore
 │  httpserver01.iml
-│  list.txt
 │  README.md
 │  
 ├─.idea
@@ -47,19 +46,34 @@
         │  
         └─com
             └─jw
-                ├─httpclients
-                │      TestDemo.java
+                │  Test.java
+                │  
+                ├─httpclient
+                │      httpclient.java
                 │      
                 └─httpserver
                         httpserver.java
                         loginservlet.java
                         servlet.java
+                        signupservlet.java
+                        user_map.java
 ```
-*对项目目录结构进行简要说明*
+ 
+目录结构简要说明：src中存放了文件资源以及源代码，其中文件资源有html与jpg两种格式，源代码分为三部分：客户端httpclient、服务器端httpserver、测试用例Test.java
+
 
 ## 代码说明
-1. *模块描述、接口描述*
+### *1. 模块描述*  
+* httpclient.java实现客户端程序
+* httpserver.java实现服务器端程序
+* servlet.java作为抽象类为httpserver.java提供login与signup服务的接口
+* loginservlet.java与signupservlet.java均继承servlet.java，并对相关方法进行重写
+* user_map.java存储用户数据，支持用户登陆与注册
+
+### *2. 接口描述*
+
 2. *对实现的7个功能逐一进行代码说明*
 
 ## 测试用例
 *展示并说明测试用例结果*
+在Test.java中我们对以下功能进行了测试：
