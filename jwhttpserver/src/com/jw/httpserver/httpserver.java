@@ -24,21 +24,22 @@ public class httpserver {
             throw new IllegalArgumentException("Port must be between 1 and 65535");
         }
         ServerSocket serverSocket = new ServerSocket(port);
-        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        ExecutorService executorService = Executors.newFixedThreadPool(50);
         System.out.println("Server started on port " + port);
         while (true) {
             Socket socket = serverSocket.accept();
             System.out.println("Connection accepted");
-            while(!socket.isClosed()) {
+//            while(!socket.isClosed()) {
                 Runnable task = () -> {
                     try {
                         handleRequest(socket);
+                        socket.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 };
                 executorService.submit(task);
-            }
+//            }
         }
     }
 
@@ -200,9 +201,9 @@ public class httpserver {
             }
         }
         dataInputStream.close();
-        dataOutputStream.flush();
+//        dataOutputStream.flush();
         dataOutputStream.close();
-//        socket.close();
+        socket.close();
 
     }
 

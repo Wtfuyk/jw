@@ -348,7 +348,7 @@ public class TestDemo {
         byte[] buffer2 = new byte[1024];
         int bytesRead2;
         StringBuilder responsesb2 = new StringBuilder();
-        bytesRead2 = dataInputStream.read(buffer);
+        bytesRead2 = dataInputStream2.read(buffer2);
 //        while ((bytesRead2 = dataInputStream2.read(buffer2)) != -1) {
             responsesb2.append(new String(buffer2, 0, bytesRead2, "UTF-8"));
 //        }
@@ -630,28 +630,28 @@ public class TestDemo {
             //send HTTP GET Request
             td.sendGet();
             //send HTTP GET Log in Request
-//            td.sendGetLogIn();
+            td.sendGetLogIn();
 //            //test3.html GUI Log in
 //            //send HTTP POST Log in Request
-//            td.loginPost();
-//            td.signupPost();
-//            td.loginPost();
-//            //301 Moved Permanently
-//            td.send301();
-//            //302 Foundsername is not exis
-//            td.send302();
-//            //304 Not Modified
-//            td.send304();
-//            //304 Modified
-////            td.send304Modified();
-//            //404 Not Found
-//            td.send404();
-//            //405 Method Not Allowed
-//            td.send405();
-//            //500 Internal Server Error
-//            td.send500();
-//            //http1.1 keep-alive
-//            td.sendGetKeepAlive();
+            td.loginPost();
+            td.signupPost();
+            td.loginPost();
+            //301 Moved Permanently
+            td.send301();
+            //302 Foundsername is not exis
+            td.send302();
+            //304 Not Modified
+            td.send304();
+            //304 Modified
+//            td.send304Modified();
+            //404 Not Found
+            td.send404();
+            //405 Method Not Allowed
+            td.send405();
+            //500 Internal Server Error
+            td.send500();
+            //http1.1 keep-alive
+            td.sendGetKeepAlive();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
