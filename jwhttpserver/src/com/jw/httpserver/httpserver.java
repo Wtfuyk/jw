@@ -68,7 +68,7 @@ public class httpserver {
         while (dataInputStream.read(requestBuffer) != -1) {
             // when the requestBuffer is null eventually, the string will not be null
             String request = new String(requestBuffer);
-            System.out.println(request);
+//            System.out.println(request);
             String firstLines = request.split("\r\n")[0];
 
             String requesturl = firstLines.split(" ")[1];
@@ -111,16 +111,16 @@ public class httpserver {
                     writeToClient(dataOutputStream, 500, "Internal Server Error", "text/html", "", "",
                             "<h1>500 Internal Server Error</h1>".getBytes());
                 }
-                if (Objects.equals(connection, "close")) {
+//                if (Objects.equals(connection, "close")) {
                     break;
-                }
+//                }
             }
 
             if (Objects.equals(requesturl, "/favicon.ico")) {
                 writeToClient(dataOutputStream, 200, "OK", "text/html", "", "", "<hi>favicon.ico</hi>".getBytes());
-                if (Objects.equals(connection, "close")) {
+//                if (Objects.equals(connection, "close")) {
                     break;
-                }
+//                }
             }
             String contentType = "text/html";
             if (requesturl.endsWith(".css")) {

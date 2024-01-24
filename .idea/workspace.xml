@@ -8,6 +8,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jwhttpserver/src/com/jw/httpclients/TestDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/jwhttpserver/src/com/jw/httpclients/TestDemo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jwhttpserver/src/com/jw/httpserver/httpserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/jwhttpserver/src/com/jw/httpserver/httpserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jwhttpserver/src/com/jw/httpserver/servlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/jwhttpserver/src/com/jw/httpserver/servlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jwhttpserver/src/com/jw/httpserver/signupservlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/jwhttpserver/src/com/jw/httpserver/signupservlet.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,8 +95,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TestDemo" />
         <item itemvalue="Application.httpserver" />
+        <item itemvalue="Application.TestDemo" />
         <item itemvalue="JavaScript Debug.test3.html" />
       </list>
     </recent_temporary>
@@ -125,7 +127,7 @@
       <workItem from="1705982131792" duration="13000" />
       <workItem from="1706009898865" duration="4944000" />
       <workItem from="1706014901207" duration="6776000" />
-      <workItem from="1706023049621" duration="5377000" />
+      <workItem from="1706023049621" duration="13408000" />
     </task>
     <task id="LOCAL-00001" summary="暂未未完成301，302，304，500">
       <option name="closed" value="true" />

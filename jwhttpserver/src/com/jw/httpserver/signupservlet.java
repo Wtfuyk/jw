@@ -15,7 +15,7 @@ public class signupservlet extends servlet{
             return "<hi>username or password is null</hi>";
         }
         user_map.getInstance().users.put(username, password);
-        System.out.println(user_map.getInstance().users);
+//        System.out.println(user_map.getInstance().users);
         return "<hi>Sign up success!</hi>";
     }
 }
