@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class httpclient {
@@ -45,16 +46,35 @@ public class httpclient {
         }
     }
 
-    public String GetRequest(String path){
+    private String GetRequest(String path,String connection){
         //TODO:根据cache构造不同请求报文
         String getRequest = "GET " + path + " HTTP/1.1\r\n" +
-                "Host: " + this.host + "\r\n\r\n";
+                "Host: " + this.host + "\r\n" +
+                "Connection: "+connection+"\r\n\r\n";
         return getRequest;
     }
-    public void sendGet(String path) throws IOException{
+
+    private String GetPost(String path,String data,String connection){
+        String postRequest = "POST " + path + " HTTP/1.1\r\n" +
+                "Host: " + this.host + "\r\n" +
+                "Content-Length: " + data.length() + "\r\n" +
+                "Content-Type: application/x-www-form-urlencoded\r\n" +
+                "Connection: "+connection+"\r\n\r\n" +
+                data;
+        return postRequest;
+    }
+
+    public Socket socketConnect() throws IOException {
         SocketAddress dest = new InetSocketAddress(this.host, this.port);
         Socket socket = new Socket();
         socket.connect(dest);
+        return socket;
+    }
+
+    public void sendGet(Socket socket,String path,String connection) throws IOException{
+//        SocketAddress dest = new InetSocketAddress(this.host, this.port);
+//        Socket socket = new Socket();
+//        socket.connect(dest);
 
         // Output stream for writing bytes
         OutputStream outputStream = socket.getOutputStream();
@@ -63,7 +83,7 @@ public class httpclient {
         // Write the GET request
         //String getRequest = "GET " + path + " HTTP/1.1\r\n" +
         //        "Host: " + this.host + "\r\n\r\n";
-        String getRequest = GetRequest(path);
+        String getRequest = GetRequest(path,connection);
         dataOutputStream.write(getRequest.getBytes());
         dataOutputStream.flush();
 
@@ -73,34 +93,36 @@ public class httpclient {
 
         // Read and print the response
         System.out.println("sendGet:Response from the server:");
-        byte[] buffer = new byte[1024];
-        int bytesRead;
-        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
+//        if(Objects.equals(connection,"close")){
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            bytesRead = dataInputStream.read(buffer);
+//        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
             String line = new String(buffer, 0, bytesRead, "UTF-8");
             System.out.print(line);
-        }
+//        }
+//       }
+
         System.out.println();
 
         // Close resources
-        //dataOutputStream.close();
-        //dataInputStream.close();
-        //socket.close();
+        if (Objects.equals(connection, "close")) {
+            dataOutputStream.close();
+            dataInputStream.close();
+            socket.close();
+        }
     }
 
-    public void sendPost(String path, String data) throws IOException{
+    public void sendPost(Socket socket, String path, String data,String connection) throws IOException{
         //String data = "username=admin&password=123456";
-        SocketAddress dest = new InetSocketAddress(this.host, this.port);
-        Socket socket = new Socket();
-        socket.connect(dest);
+//        SocketAddress dest = new InetSocketAddress(this.host, this.port);
+//        Socket socket = new Socket();
+//        socket.connect(dest);
 
         OutputStream outputStream = socket.getOutputStream();
         DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
 
-        String postRequest = "POST " + path + " HTTP/1.1\r\n" +
-                "Host: " + this.host + "\r\n" +
-                "Content-Length: " + data.length() + "\r\n" +
-                "Content-Type: application/x-www-form-urlencoded\r\n\r\n" +
-                data;
+        String postRequest = GetPost(path,data,connection);
         dataOutputStream.write(postRequest.getBytes());
         dataOutputStream.flush();
 
@@ -112,22 +134,24 @@ public class httpclient {
         System.out.println("sendPost:Response from the server:");
         byte[] buffer = new byte[1024];
         int bytesRead;
-        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
+        bytesRead = dataInputStream.read(buffer);
+//        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
             String line = new String(buffer, 0, bytesRead, "UTF-8");
             System.out.print(line);
-        }
+//        }
         System.out.println();
 
         // Close resources
-        //dataOutputStream.close();
-        //dataInputStream.close();
-        //socket.close();
+        if (Objects.equals(connection,"close")){
+        dataOutputStream.close();
+        dataInputStream.close();
+        socket.close();}
     }
 
-    public void wrongMethodSend(String path) throws IOException{
-        SocketAddress dest = new InetSocketAddress(this.host, this.port);
-        Socket socket = new Socket();
-        socket.connect(dest);
+    public void wrongMethodSend(Socket socket,String path,String connection) throws IOException{
+//        SocketAddress dest = new InetSocketAddress(this.host, this.port);
+//        Socket socket = new Socket();
+//        socket.connect(dest);
 
         // Output stream for writing bytes
         OutputStream outputStream = socket.getOutputStream();
@@ -135,7 +159,8 @@ public class httpclient {
 
         // Write the GET request
         String getRequest = "DELETE " + path + " HTTP/1.1\r\n" +
-               "Host: " + this.host + "\r\n\r\n";
+                "Host: " + this.host + "\r\n" +
+                "Connection: "+connection+"\r\n\r\n";
         dataOutputStream.write(getRequest.getBytes());
         dataOutputStream.flush();
 
@@ -147,16 +172,18 @@ public class httpclient {
         System.out.println("sendGet:Response from the server:");
         byte[] buffer = new byte[1024];
         int bytesRead;
-        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
-            String line = new String(buffer, 0, bytesRead, "UTF-8");
-            System.out.print(line);
-        }
+        bytesRead = dataInputStream.read(buffer);
+        //        while ((bytesRead = dataInputStream.read(buffer)) != -1) {
+        String line = new String(buffer, 0, bytesRead, "UTF-8");
+        System.out.print(line);
+//        }
         System.out.println();
 
         // Close resources
+        if(Objects.equals(connection,"close")){
         dataOutputStream.close();
         dataInputStream.close();
-        socket.close();
+        socket.close();}
     }
     //get index.html
     /*
